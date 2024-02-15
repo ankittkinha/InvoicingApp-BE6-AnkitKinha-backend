@@ -16,7 +16,7 @@ class RegisterView(APIView):
         
         if serialized_data.is_valid():
             users_data.append(serialized_data.data)
-            return Response("Your account has been created.", status=201)
+            return Response({"message": "Your account has been created."}, status=201)
         return Response(serialized_data.errors, status=400)
             
             
@@ -28,7 +28,7 @@ class LoginView(APIView):
             if value["email"] == login_data["email"] and value["password"] == login_data["password"]:
                 token = jwt.encode({"email": value["email"]}, "secret", algorithm="HS256")
                 return Response({"message": "Login Successful", "token": str(token)}, status=200)
-        return Response("Login failed", status=401)
+        return Response({"message":"Login failed"}, status=401)
     
     
 class InvoiceView(APIView):
